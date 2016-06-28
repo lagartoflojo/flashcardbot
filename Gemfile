@@ -23,6 +23,7 @@ group :development, :test do
   gem 'pry-rails', platform: :mri
   gem 'rspec-rails', '3.5.0.beta4'
   gem 'rspec-its'
+  gem 'rubocop', require: false
 end
 
 group :development do
