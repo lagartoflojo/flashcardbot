@@ -79,6 +79,8 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-rails (0.3.4)
+      pry (>= 0.9.10)
     puma (3.4.0)
     rack (2.0.0.rc1)
       json
@@ -161,7 +163,7 @@ DEPENDENCIES
   active_model_serializers (~> 0.10.0)
   listen (~> 3.0.5)
   pg (~> 0.18)
-  pry
+  pry-rails
   puma (~> 3.0)
   rails (>= 5.0.0.rc2, < 5.1)
   rspec-its

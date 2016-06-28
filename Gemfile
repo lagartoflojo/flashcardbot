@@ -20,7 +20,7 @@ gem 'puma', '~> 3.0'
 gem 'active_model_serializers', '~> 0.10.0'
 
 group :development, :test do
-  gem 'pry', platform: :mri
+  gem 'pry-rails', platform: :mri
   gem 'rspec-rails', '3.5.0.beta4'
   gem 'rspec-its'
 end
