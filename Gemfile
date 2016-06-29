@@ -19,6 +19,8 @@ gem 'puma', '~> 3.0'
 
 gem 'active_model_serializers', '~> 0.10.0'
 
+gem 'telegram-bot-ruby', require: 'telegram/bot'
+
 group :development, :test do
   gem 'pry-rails', platform: :mri
   gem 'rspec-rails', '3.5.0.beta4'
