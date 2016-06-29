@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe "Telegram Webhook" do
   let(:token) { Rails.application.secrets.bot_token }
-  let(:params) { { message: { from: { id: 13182073, first_name: "Hernán", last_name: "Schmidt", username: "hernan" } } } }
+  let(:params) { { message_key => { from: { id: 13182073, first_name: "Hernán", last_name: "Schmidt", username: "hernan" } } } }
   let(:webhook) { -> { post '/api/webhook/' + token, params: params } }
+  let(:message_key) { :message }
 
   describe 'authentication' do
     before { webhook.call }
@@ -21,8 +22,15 @@ RSpec.describe "Telegram Webhook" do
 
   describe 'user handling' do
     context 'when the user does not exist yet' do
-      it 'creates a new user' do
-        expect { webhook.call }.to change { User.count }.by(1)
+      [ :inline_query,
+        :chosen_inline_result,
+        :callback_query,
+        :edited_message,
+        :message ].each do |key|
+          let(:message_key) { key }
+          it 'creates a new user' do
+            expect { webhook.call }.to change { User.count }.by(1)
+          end
       end
     end
 
