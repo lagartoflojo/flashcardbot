@@ -1,0 +1,2 @@
+class CardSide < ApplicationRecord
+end

@@ -22,4 +22,8 @@ class ProcessUpdate
   def adding_deck
     CreateDeck.new(user, update).call
   end
+
+  def adding_front_side
+    AddCardFrontSide.new(user, update).call
+  end
 end

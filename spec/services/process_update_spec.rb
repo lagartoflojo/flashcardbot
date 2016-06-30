@@ -35,4 +35,16 @@ RSpec.describe ProcessUpdate do
       end
     end
   end
+
+  context 'when the user is adding_front_side' do
+    before { user.adding_front_side! }
+    let(:message_text) { 'Kater' }
+
+    context 'when it receives a message' do
+      it 'calls the AddFrontSide service' do
+        expect_any_instance_of(AddCardFrontSide).to receive(:call)
+        service.call
+      end
+    end
+  end
 end

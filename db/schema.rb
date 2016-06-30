@@ -10,10 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160630114647) do
+ActiveRecord::Schema.define(version: 20160630135401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "card_sides", force: :cascade do |t|
+    t.string   "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "cards", force: :cascade do |t|
+    t.integer  "deck_id",       null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "front_side_id"
+    t.integer  "back_side_id"
+    t.index ["back_side_id"], name: "index_cards_on_back_side_id", using: :btree
+    t.index ["deck_id"], name: "index_cards_on_deck_id", using: :btree
+    t.index ["front_side_id"], name: "index_cards_on_front_side_id", using: :btree
+  end
 
   create_table "decks", force: :cascade do |t|
     t.string   "name",       null: false
@@ -34,5 +51,8 @@ ActiveRecord::Schema.define(version: 20160630114647) do
     t.index ["telegram_id"], name: "index_users_on_telegram_id", using: :btree
   end
 
+  add_foreign_key "cards", "card_sides", column: "back_side_id"
+  add_foreign_key "cards", "card_sides", column: "front_side_id"
+  add_foreign_key "cards", "decks"
   add_foreign_key "decks", "users"
 end
