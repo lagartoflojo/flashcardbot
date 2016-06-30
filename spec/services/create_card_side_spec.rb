@@ -63,6 +63,27 @@ RSpec.describe CreateCardSide do
         expect(card_side.text).to eq 'a cat'
       end
     end
+  end
 
+  context 'with a document' do
+    let(:update_hash) {
+      {:update_id=>321321,
+        :message=>
+        {:message_id=>52,
+          :from=>{:id=>1, :first_name=>"Hernan", :last_name=>"Schmidt", :username=>"hernan"},
+          :chat=>{:id=>1, :first_name=>"Hernan", :last_name=>"Schmidt", :username=>"hernan", :type=>"private"},
+          :date=>1467296123,
+          :document=>{:file_name=>"giphy.mp4",
+           :mime_type=>"video/mp4",
+           :thumb=>
+            {:file_id=>"AAQEABNYVGswAASxHC0QxOQe-o84AQABAg", :file_size=>2173, :width=>90, :height=>69},
+           :file_id=>"BQADBAADuwMAAlkdZAeBFdTzSwuScQI",
+           :file_size=>1133417}}}
+    }
+
+    it 'creates a card side with the given document' do
+      card_side = service.call
+      expect(card_side.document_id).to eq 'BQADBAADuwMAAlkdZAeBFdTzSwuScQI'
+    end
   end
 end
