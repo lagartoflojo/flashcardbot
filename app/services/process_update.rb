@@ -18,4 +18,8 @@ class ProcessUpdate
       AddDeck.new(user, update).call
     end
   end
+
+  def adding_deck
+    CreateDeck.new(user, update).call
+  end
 end

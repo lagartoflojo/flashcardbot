@@ -10,4 +10,6 @@ class User < ApplicationRecord
   ]
 
   validates :first_name, :telegram_id, presence: true
+
+  has_many :decks
 end

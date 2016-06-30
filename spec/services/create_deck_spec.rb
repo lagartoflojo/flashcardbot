@@ -1,45 +1,45 @@
-RSpec.describe AddDeck do
+RSpec.describe CreateDeck do
   let(:user) { User.create telegram_id: 123123, first_name: 'Bob' }
   let(:update_hash) {
     {:update_id=>321321,
-      update_type =>
+      :message =>
       {:message_id=>38,
         :from=>{:id=>1, :first_name=>"Hernan", :last_name=>"Schmidt", :username=>"hernan"},
         :chat=>{:id=>1, :first_name=>"Hernan", :last_name=>"Schmidt", :username=>"hernan", :type=>"private"},
         :date=>1467277868,
-        :text=>"/newdeck",
+        :text=>"German 1000",
         :entities=>[{:type=>"bot_command", :offset=>0, :length=>8}]}}
   }
-  let(:update_type) { :message }
   let(:update) { Telegram::Bot::Types::Update.new update_hash }
-  let(:service) { AddDeck.new(user, update) }
+  let(:service) { CreateDeck.new(user, update) }
 
   let(:api_response) {
     {:message_id=>39,
       :from=>{:id=>1, :first_name=>"Hippocardus", :username=>"hippocardus"},
       :chat=>{:id=>1, :first_name=>"Hernan", :last_name=>"Schmidt", :username=>"hernan", :type=>"private"},
       :date=>1467277868,
-      :text=>"What’s the name of this deck?"}.to_json
+      :text=>"Deck created!"}.to_json
   }
 
-  context 'when receiving the /newdeck command' do
+
+  context "when it receives a message with the new deck's name" do
     before do
       stub_request(:post, "https://api.telegram.org/bot#{Rails.application.secrets.bot_token}/sendMessage").
-        with(:body => {"chat_id"=>"1", "text"=>"What’s the name of this deck?"}).
+        with(:body => {"chat_id" => "1", "text" => /created/}).
         and_return(status: 200, body: api_response)
     end
 
-    it 'asks the user for the name of the deck' do
+    it 'creates a new deck with the given name' do
       service.call
+      expect(user.decks.find_by(name: 'German 1000')).not_to be_nil
     end
 
-    it 'changes the user status to `adding_deck`' do
+    it 'changes the user status to adding_front_side' do
       service.call
-      expect(user).to be_adding_deck
+      expect(user).to be_adding_front_side
     end
+
+    it 'handles the case when the deck already exists'
   end
 
-  context 'the update is not a message' do
-    it 'asks for the name again'
-  end
 end
