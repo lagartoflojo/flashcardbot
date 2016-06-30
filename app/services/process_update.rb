@@ -24,10 +24,22 @@ class ProcessUpdate
   end
 
   def adding_front_side
-    AddCardFrontSide.new(user, update).call
+    command = update.message.try! :text
+    case command
+    when /.*\/done.*/
+      FinishAddingCards.new(user, update).call
+    else
+      AddCardFrontSide.new(user, update).call
+    end
   end
 
   def adding_back_side
-    AddCardBackSide.new(user, update).call
+    command = update.message.try! :text
+    case command
+    when /.*\/done.*/
+      FinishAddingCards.new(user, update).call
+    else
+      AddCardBackSide.new(user, update).call
+    end
   end
 end

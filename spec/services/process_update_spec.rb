@@ -38,9 +38,19 @@ RSpec.describe ProcessUpdate do
 
   context 'when the user is adding_front_side' do
     before { user.adding_front_side! }
-    let(:message_text) { 'cat' }
 
-    context 'when it receives a message' do
+    context 'when it receives the /done command' do
+      let(:message_text) { '/done' }
+
+      it 'calls the FinishAddingCards service' do
+        expect_any_instance_of(FinishAddingCards).to receive(:call)
+        service.call
+      end
+    end
+
+    context 'when it receives any other message' do
+      let(:message_text) { 'cat' }
+
       it 'calls the AddCardFrontSide service' do
         expect_any_instance_of(AddCardFrontSide).to receive(:call)
         service.call
@@ -51,6 +61,15 @@ RSpec.describe ProcessUpdate do
   context 'when the user is adding_back_side' do
     before { user.adding_back_side! }
     let(:message_text) { 'die Katze' }
+
+    context 'when it receives the /done command' do
+      let(:message_text) { '/done' }
+
+      it 'calls the FinishAddingCards service' do
+        expect_any_instance_of(FinishAddingCards).to receive(:call)
+        service.call
+      end
+    end
 
     context 'when it receives a message' do
       it 'calls the AddCardBackSide service' do
