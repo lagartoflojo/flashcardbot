@@ -16,17 +16,21 @@ class AddCardFrontSide
 
   def create_card
     card = deck.cards.create
-    side = CardSide.create(text: card_text)
+    side = create_card_side
     card.front_side = side
     card.save
   end
 
-  def chat_id
-    update.message.chat.id
+  def create_card_side
+    if card_text = update.message.text
+      CardSide.create(text: card_text)
+    elsif photos = update.message.photo
+      CardSide.create(photo_id: photos.first.file_id, text: update.message.caption)
+    end
   end
 
-  def card_text
-    update.message.text
+  def chat_id
+    update.message.chat.id
   end
 
   def deck
