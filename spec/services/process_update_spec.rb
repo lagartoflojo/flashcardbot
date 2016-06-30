@@ -22,6 +22,15 @@ RSpec.describe ProcessUpdate do
         service.call
       end
     end
+
+    context 'when the command is /practice' do
+      let(:message_text) { '/practice'}
+
+      it 'calls the ChooseDeckToPractice service' do
+        expect_any_instance_of(ChooseDeckToPractice).to receive(:call)
+        service.call
+      end
+    end
   end
 
   context 'when the user is adding_deck' do

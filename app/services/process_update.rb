@@ -16,6 +16,8 @@ class ProcessUpdate
     case command
     when /.*\/newdeck.*/
       AddDeck.new(user, update).call
+    when /.*\/practice.*/
+      ChooseDeckToPractice.new(user, update).call
     end
   end
 
