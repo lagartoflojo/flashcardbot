@@ -20,7 +20,7 @@ RSpec.describe FinishAddingCards do
         :text=> '/done',
         :entities=>[{:type=>"bot_command", :offset=>0, :length=>5}]}}
   }
-  let(:stub) {
+  let!(:stub) {
     stub_request(:post, "https://api.telegram.org/bot#{Rails.application.secrets.bot_token}/sendMessage").
       with(:body => {"chat_id" => "123123", "text" => /Done adding cards/}).
       and_return(status: 200, body: api_response)
@@ -28,7 +28,6 @@ RSpec.describe FinishAddingCards do
 
   before do
     user.adding_front_side!
-    stub
   end
 
   it 'puts the user in the waiting status' do

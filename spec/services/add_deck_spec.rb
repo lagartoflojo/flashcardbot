@@ -2,7 +2,7 @@ RSpec.describe AddDeck do
   let(:user) { User.create telegram_id: 123123, first_name: 'Bob' }
   let(:update_hash) {
     {:update_id=>321321,
-      update_type =>
+      :message =>
       {:message_id=>38,
         :from=>{:id=>1, :first_name=>"Hernan", :last_name=>"Schmidt", :username=>"hernan"},
         :chat=>{:id=>1, :first_name=>"Hernan", :last_name=>"Schmidt", :username=>"hernan", :type=>"private"},
@@ -10,7 +10,6 @@ RSpec.describe AddDeck do
         :text=>"/newdeck",
         :entities=>[{:type=>"bot_command", :offset=>0, :length=>8}]}}
   }
-  let(:update_type) { :message }
   let(:update) { Telegram::Bot::Types::Update.new update_hash }
   let(:service) { AddDeck.new(user, update) }
 
