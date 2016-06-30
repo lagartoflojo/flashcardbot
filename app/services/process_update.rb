@@ -44,4 +44,8 @@ class ProcessUpdate
       AddCardBackSide.new(user, update).call
     end
   end
+
+  def choosing_deck_to_practice
+    StartPractice.new(user, update).call
+  end
 end

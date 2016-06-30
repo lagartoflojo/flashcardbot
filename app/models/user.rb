@@ -13,4 +13,5 @@ class User < ApplicationRecord
   validates :first_name, :telegram_id, presence: true
 
   has_many :decks
+  belongs_to :current_deck, class_name: 'Deck', optional: true
 end

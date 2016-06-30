@@ -87,4 +87,14 @@ RSpec.describe ProcessUpdate do
       end
     end
   end
+
+  context 'when the user is choosing_deck_to_practice' do
+    before { user.choosing_deck_to_practice! }
+    let(:message_text) { 'German 1000' }
+
+    it 'calls the StartPractice service' do
+      expect_any_instance_of(StartPractice).to receive(:call)
+      service.call
+    end
+  end
 end
