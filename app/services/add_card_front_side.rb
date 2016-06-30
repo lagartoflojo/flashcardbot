@@ -15,10 +15,8 @@ class AddCardFrontSide
   attr_accessor :user, :update, :client
 
   def create_card
-    card = deck.cards.create
     side = CreateCardSide.new(update).call
-    card.front_side = side
-    card.save
+    deck.cards.create front_side: side
   end
 
   def chat_id
