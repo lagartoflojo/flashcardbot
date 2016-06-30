@@ -26,4 +26,8 @@ class ProcessUpdate
   def adding_front_side
     AddCardFrontSide.new(user, update).call
   end
+
+  def adding_back_side
+    AddCardBackSide.new(user, update).call
+  end
 end
