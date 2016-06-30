@@ -16,17 +16,9 @@ class AddCardFrontSide
 
   def create_card
     card = deck.cards.create
-    side = create_card_side
+    side = CreateCardSide.new(update).call
     card.front_side = side
     card.save
-  end
-
-  def create_card_side
-    if card_text = update.message.text
-      CardSide.create(text: card_text)
-    elsif photos = update.message.photo
-      CardSide.create(photo_id: photos.first.file_id, text: update.message.caption)
-    end
   end
 
   def chat_id
