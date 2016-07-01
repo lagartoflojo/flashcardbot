@@ -51,7 +51,7 @@ RSpec.describe ShowCardFrontSide do
 
     context 'with a photo' do
       let(:front_side_attrs) { { photo_id: 'NjkanDKJSANDASjdnAKJDSnASKd' } }
-      let(:body_attrs) { { photo: 'NjkanDKJSANDASjdnAKJDSnASKd', caption: nil } }
+      let(:body_attrs) { { photo: 'NjkanDKJSANDASjdnAKJDSnASKd' } }
 
       it 'sends the user the front side of the card' do
         service.call

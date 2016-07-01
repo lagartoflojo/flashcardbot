@@ -7,13 +7,18 @@ class ShowCardFrontSide < BaseService
   def send_card
     side = card.front_side
 
+    message_attrs = { chat_id: chat_id }
+
     if side.photo_id?
-      client.api.send_message(chat_id: chat_id, caption: side.text, photo: side.photo_id)
+      message_attrs.merge!(photo: side.photo_id)
+      message_attrs.merge!(caption: side.text) if side.text?
     elsif side.document_id?
-      client.api.send_message(chat_id: chat_id, document: side.document_id)
+      message_attrs.merge!(document: side.document_id)
     else
-      client.api.send_message(chat_id: chat_id, text: card.front_side.text)
+      message_attrs.merge!(text: side.text)
     end
+
+    client.api.send_message message_attrs
   end
 
   def card
