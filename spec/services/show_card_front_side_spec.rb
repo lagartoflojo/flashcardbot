@@ -26,7 +26,7 @@ RSpec.describe ShowCardFrontSide do
   }
   let!(:stub) {
     stub_request(:post, "https://api.telegram.org/bot#{Rails.application.secrets.bot_token}/#{api_method}").
-    with(:body => {"chat_id"=>"1"}.merge(body_attrs)).
+    with(:body => {"chat_id"=>"1", "reply_markup" => /Show answer/}.merge(body_attrs)).
     to_return(:status => 200, :body => api_response)
   }
   let(:front_side_attrs) { { text: 'cat' } }

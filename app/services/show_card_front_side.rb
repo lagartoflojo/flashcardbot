@@ -7,7 +7,7 @@ class ShowCardFrontSide < BaseService
   def send_card
     side = card.front_side
 
-    message_attrs = { chat_id: chat_id }
+    message_attrs = { chat_id: chat_id, reply_markup: keyboard }
 
     if side.photo_id?
       message_attrs.merge!(photo: side.photo_id)
@@ -20,6 +20,11 @@ class ShowCardFrontSide < BaseService
       message_attrs.merge!(text: side.text)
       client.api.send_message message_attrs
     end
+  end
+
+  def keyboard
+    button = Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Show answer', callback_data: 'show')
+    Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: [[button]])
   end
 
   def card
