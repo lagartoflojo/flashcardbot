@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160630232241) do
+ActiveRecord::Schema.define(version: 20160701084659) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,8 @@ ActiveRecord::Schema.define(version: 20160630232241) do
     t.datetime "updated_at",                  null: false
     t.integer  "chat_status",     default: 0, null: false
     t.integer  "current_deck_id"
+    t.integer  "current_card_id"
+    t.index ["current_card_id"], name: "index_users_on_current_card_id", using: :btree
     t.index ["current_deck_id"], name: "index_users_on_current_deck_id", using: :btree
     t.index ["telegram_id"], name: "index_users_on_telegram_id", using: :btree
   end
@@ -59,5 +61,6 @@ ActiveRecord::Schema.define(version: 20160630232241) do
   add_foreign_key "cards", "card_sides", column: "front_side_id"
   add_foreign_key "cards", "decks"
   add_foreign_key "decks", "users"
+  add_foreign_key "users", "cards", column: "current_card_id"
   add_foreign_key "users", "decks", column: "current_deck_id"
 end

@@ -4,4 +4,5 @@ class Card < ApplicationRecord
   belongs_to :back_side, class_name: 'CardSide', optional: true
 
   scope :latest, -> { order(created_at: :desc) }
+  scope :random, -> { order 'RANDOM()' }
 end

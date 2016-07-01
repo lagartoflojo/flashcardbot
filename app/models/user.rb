@@ -14,4 +14,5 @@ class User < ApplicationRecord
 
   has_many :decks
   belongs_to :current_deck, class_name: 'Deck', optional: true
+  belongs_to :current_card, class_name: 'Card', optional: true
 end
