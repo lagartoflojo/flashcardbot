@@ -1,10 +1,4 @@
-class CreateDeck
-  def initialize(user, update)
-    self.user = user
-    self.update = update
-    self.client = Telegram::Bot::Client.new(Rails.application.secrets.bot_token)
-  end
-
+class CreateDeck < BaseService
   def call
     user.decks.find_or_create_by name: deck_name
     user.adding_front_side!
@@ -12,13 +6,7 @@ class CreateDeck
   end
 
   private
-  attr_accessor :user, :update, :client
-
   def deck_name
     update.message.text
-  end
-
-  def chat_id
-    update.message.chat.id
   end
 end

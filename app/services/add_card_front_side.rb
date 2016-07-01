@@ -1,10 +1,4 @@
-class AddCardFrontSide
-  def initialize(user, update)
-    self.user = user
-    self.update = update
-    self.client = Telegram::Bot::Client.new(Rails.application.secrets.bot_token)
-  end
-
+class AddCardFrontSide < BaseService
   def call
     create_card
     client.api.send_message(chat_id: chat_id, text: "Got it! Now send me the back side.")
@@ -12,15 +6,9 @@ class AddCardFrontSide
   end
 
   private
-  attr_accessor :user, :update, :client
-
   def create_card
     side = CreateCardSide.new(update).call
     deck.cards.create front_side: side
-  end
-
-  def chat_id
-    update.message.chat.id
   end
 
   def deck
