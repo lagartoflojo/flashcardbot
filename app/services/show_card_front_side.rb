@@ -12,13 +12,14 @@ class ShowCardFrontSide < BaseService
     if side.photo_id?
       message_attrs.merge!(photo: side.photo_id)
       message_attrs.merge!(caption: side.text) if side.text?
+      client.api.send_photo message_attrs
     elsif side.document_id?
       message_attrs.merge!(document: side.document_id)
+      client.api.send_document message_attrs
     else
       message_attrs.merge!(text: side.text)
+      client.api.send_message message_attrs
     end
-
-    client.api.send_message message_attrs
   end
 
   def card

@@ -25,12 +25,13 @@ RSpec.describe ShowCardFrontSide do
     deck.cards.create front_side: front_side
   }
   let!(:stub) {
-    stub_request(:post, "https://api.telegram.org/bot#{Rails.application.secrets.bot_token}/sendMessage").
+    stub_request(:post, "https://api.telegram.org/bot#{Rails.application.secrets.bot_token}/#{api_method}").
     with(:body => {"chat_id"=>"1"}.merge(body_attrs)).
     to_return(:status => 200, :body => api_response)
   }
   let(:front_side_attrs) { { text: 'cat' } }
   let(:body_attrs) { { text: 'cat' } }
+  let(:api_method) { 'sendMessage' }
 
   before do
     user.update current_deck: deck
@@ -52,6 +53,7 @@ RSpec.describe ShowCardFrontSide do
     context 'with a photo' do
       let(:front_side_attrs) { { photo_id: 'NjkanDKJSANDASjdnAKJDSnASKd' } }
       let(:body_attrs) { { photo: 'NjkanDKJSANDASjdnAKJDSnASKd' } }
+      let(:api_method) { 'sendPhoto' }
 
       it 'sends the user the front side of the card' do
         service.call
@@ -62,6 +64,7 @@ RSpec.describe ShowCardFrontSide do
     context 'with a photo + caption' do
       let(:front_side_attrs) { { photo_id: 'NjkanDKJSANDASjdnAKJDSnASKd', text: 'cat' } }
       let(:body_attrs) { { photo: 'NjkanDKJSANDASjdnAKJDSnASKd', caption: 'cat' } }
+      let(:api_method) { 'sendPhoto' }
 
       it 'sends the user the front side of the card' do
         service.call
@@ -72,6 +75,7 @@ RSpec.describe ShowCardFrontSide do
     context 'with a document' do
       let(:front_side_attrs) { { document_id: 'NjkanDKJSANDASjdnAKJDSnASKd' } }
       let(:body_attrs) { { document: 'NjkanDKJSANDASjdnAKJDSnASKd' } }
+      let(:api_method) { 'sendDocument' }
 
       it 'sends the user the front side of the card' do
         service.call
