@@ -48,4 +48,8 @@ class ProcessUpdate
   def choosing_deck_to_practice
     StartPractice.new(user, update).call
   end
+
+  def showing_front_side
+    ShowCardBackSide.new(user, update).call
+  end
 end

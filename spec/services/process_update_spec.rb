@@ -4,7 +4,7 @@ RSpec.describe ProcessUpdate do
   let(:service) { ProcessUpdate.new(user, update) }
   let(:update_hash) {
     {:update_id=>321321,
-      :message=>
+      update_type =>
       {:message_id=>38,
         :from=>{:id=>123123, :first_name=>"Hernan", :last_name=>"Schmidt", :username=>"hernan"},
         :chat=>{:id=>123123, :first_name=>"Hernan", :last_name=>"Schmidt", :username=>"hernan", :type=>"private"},
@@ -12,6 +12,7 @@ RSpec.describe ProcessUpdate do
         :text=> message_text,
         :entities=>[{:type=>"bot_command", :offset=>0, :length=>8}]}}
   }
+  let(:update_type) { :message }
 
   context 'when the user is waiting' do
     context 'when the command is /newdeck' do
@@ -95,6 +96,19 @@ RSpec.describe ProcessUpdate do
     it 'calls the StartPractice service' do
       expect_any_instance_of(StartPractice).to receive(:call)
       service.call
+    end
+  end
+
+  context 'when the user is showing_front_side' do
+    before { user.showing_front_side! }
+    let(:update_type) { :callback_query }
+    let(:message_text) { 'anything' }
+
+    context 'the user presses the "Show answer" button' do
+      it 'should call de ShowCardBackSide service' do
+        expect_any_instance_of(ShowCardBackSide).to receive(:call)
+        service.call
+      end
     end
   end
 end
