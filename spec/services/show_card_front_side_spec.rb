@@ -42,6 +42,11 @@ RSpec.describe ShowCardFrontSide do
     expect(user.current_card).to eq card
   end
 
+  it 'sets the user status to showing_front_side' do
+    service.call
+    expect(user).to be_showing_front_side
+  end
+
   describe 'sending a card' do
     context 'with text' do
       it 'sends the user the front side of the card' do

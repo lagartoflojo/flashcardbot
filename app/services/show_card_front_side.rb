@@ -1,6 +1,7 @@
 class ShowCardFrontSide < BaseService
   def call
     send_card
+    user.showing_front_side!
   end
 
   private

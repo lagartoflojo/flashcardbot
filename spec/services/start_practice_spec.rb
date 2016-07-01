@@ -48,11 +48,6 @@ RSpec.describe StartPractice do
       service.call
       expect(stub).to have_been_requested
     end
-
-    it 'sets the user status to showing_front_side' do
-      service.call
-      expect(user).to be_showing_front_side
-    end
   end
 
   context 'when the given deck name does not exist' do

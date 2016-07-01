@@ -3,7 +3,6 @@ class StartPractice < BaseService
     if deck
       client.api.send_message(chat_id: chat_id, text: 'Great! Let’s get started!')
       user.update current_deck: deck
-      user.showing_front_side!
       ShowCardFrontSide.new(user, update).call
     else
       client.api.send_message(chat_id: chat_id, text: 'I couldn’t find a deck by that name.')
