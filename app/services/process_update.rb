@@ -52,4 +52,8 @@ class ProcessUpdate
   def showing_front_side
     ShowCardBackSide.new(user, update).call
   end
+
+  def showing_back_side
+    SetCardDifficulty.new(user, update).call
+  end
 end

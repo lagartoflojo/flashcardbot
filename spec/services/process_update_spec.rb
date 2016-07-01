@@ -105,8 +105,21 @@ RSpec.describe ProcessUpdate do
     let(:message_text) { 'anything' }
 
     context 'the user presses the "Show answer" button' do
-      it 'should call de ShowCardBackSide service' do
+      it 'calls the ShowCardBackSide service' do
         expect_any_instance_of(ShowCardBackSide).to receive(:call)
+        service.call
+      end
+    end
+  end
+
+  context 'when the user is showing_back_side' do
+    before { user.showing_back_side! }
+    let(:update_type) { :callback_query }
+    let(:message_text) { 'anything' }
+
+    context 'the user presses one of the Again/Hard/Good/Easy buttons' do
+      it 'calls the SetCardDifficulty service' do
+        expect_any_instance_of(SetCardDifficulty).to receive(:call)
         service.call
       end
     end

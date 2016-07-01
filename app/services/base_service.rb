@@ -16,6 +16,14 @@ class BaseService
   end
 
   def chat_id
-    update.message.chat.id
+    message.chat.id
+  end
+
+  def message
+    update.inline_query ||
+      update.chosen_inline_result ||
+      update.callback_query ||
+      update.edited_message ||
+      update.message
   end
 end
